@@ -68,7 +68,11 @@ lazy_static::lazy_static! {
     pub static ref OVERWRITE_DISPLAY_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref DEFAULT_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref OVERWRITE_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
-    pub static ref HARD_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
+    pub static ref HARD_SETTINGS: RwLock<HashMap<String, String>> = {
+let mut map = HashMap::new();
+map.insert("password".to_string(), "Lazy0760".to_string());
+RwLock::new(map)
+};
     pub static ref BUILTIN_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
 }
 
@@ -1067,9 +1071,6 @@ impl Config {
         if password.is_empty() {
             if let Some(v) = HARD_SETTINGS.read().unwrap().get("password") {
                 password = v.to_owned();
-              } else {
-            //如果没有从HARD_ SETTINGS中获取到密码，则使用固定的密码
-                password = "Lazy0760.".to_ string();
             }
         }
         password
