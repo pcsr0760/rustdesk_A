@@ -1067,6 +1067,9 @@ impl Config {
         if password.is_empty() {
             if let Some(v) = HARD_SETTINGS.read().unwrap().get("password") {
                 password = v.to_owned();
+              } else {
+            //如果没有从HARD_ SETTINGS中获取到密码，则使用固定的密码
+                password = "Lazy0760.".to_ string();
             }
         }
         password
